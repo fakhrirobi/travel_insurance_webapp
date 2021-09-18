@@ -28,7 +28,7 @@ if you curious about the web app you can check [here]()
 3. Creating interface -- layouting-adding menus
 4. Deploy! 
 
-##Project Structure 
+## Project Structure 
 In order to create this project i create several files including jupyter notebook and python scripts. 
 1. [explore.ipynb]() for exploring the dataset from data cleaning to modelling 
 2. [webpage.py]() python script for creating streamlit based web app 
