@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "travel_insurance_webapp"
+version = "0.1.0"
+description = "This Project Aim to Create Web App Based on Streamlit for predicting whether a customer is willing to buy travel insurance product"
+authors = ["Fakhri Robi Aulia fakhrirobi.fra@gmail.com"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "3.8.5"
+streamlit = "0.87.0"
+numpy = "1.19.5"
+plotly = "5.3.1"
+streamlit_aggrid = "0.2.1"
+seaborn = "0.11.1"
+scipy = "1.5.4"
+xgboost = "1.1.1"
+matplotlib = "3.3.4"
+pandas = "1.1.5"
+scikit_learn = "1.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
