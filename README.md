@@ -20,7 +20,7 @@ The Project itself has theese following features :
    
 
 
-if you curious about the web app you can check [here]()
+if you curious about the web app you can check [here](https://share.streamlit.io/fakhrirobi/travel_insurance_webapp/main/webapp.py)
 
 ## Project Workflow 
 1. Data Exploration -- data cleaning-visualization-encoding
@@ -126,7 +126,7 @@ voting_classifier_params =
  'gbc__verbose': 0,
  'gbc__warm_start': False}  
 ````
-if you want to customize on your own feel free to download model in my [this web app()
+if you want to customize on your own feel free to download model in my [this web app](https://share.streamlit.io/fakhrirobi/travel_insurance_webapp/main/webapp.py)
 |Model Name |Accuracy Score  |ROC AUC Score|
 |---------|---------|---------|
 |XGBClassifier     |   0.849246      |0.849135|
