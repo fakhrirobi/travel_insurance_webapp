@@ -16,7 +16,7 @@ The Project itself is deployed on streamlit, with following features :
 1. Heroku for Deployment 
 2. streamlit for web page creation 
 3. Data processing packages / libraries such as Pandas, Numpy, seaborn , and etc. 
-4. Machine Learning Model : sklearn, pycaret, lightgbm, pytorch 
+4. Machine Learning Model : sklearn, xgboost
    
 
 
@@ -39,7 +39,21 @@ In order to create this project i create several files including jupyter noteboo
 
 ## Metrics 
 
-Since the dataset's target class is not well distributed we attempt to use ROC AUC Scoring
+Since the dataset's target class is not well distributed we attempt to use ROC AUC Scoring. 
+The Model is using 
+````
+xgb_param  = {
+            'objective':'binary:logistic',
+            'max_depth': 6,
+            'alpha': 10,
+            'learning_rate': 0.0001,
+            'n_estimators':300
+        }  
+````
+if you want to customize on your own feel free to download model in my [this web app]()
+![MODEL PERFORMANCE](assets/model_performance.png)
+
+
 
 
 
