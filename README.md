@@ -30,12 +30,11 @@ if you curious about the web app you can check [here](https://share.streamlit.io
 
 ## Project Structure 
 In order to create this project i create several files including jupyter notebook and python scripts. 
-1. [explore.ipynb]() for exploring the dataset from data cleaning to modelling 
-2. [webpage.py]() python script for creating streamlit based web app 
-3. [Procfile]() and [setup.sh]() for heroku deployment 
-4. [poetry.lock]() for dependency management 
-5. [Dockerfile]() for containerizing app 
-6. 
+1. [modelling.ipynb]() for exploring the dataset from data cleaning to modelling 
+2. [webapp.py]() python script for creating streamlit based web app 
+3. [poetry.lock]() for dependency management 
+4. [Dockerfile]() for containerizing app 
+
 
 ## Metrics 
 
