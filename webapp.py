@@ -1,3 +1,4 @@
+from os import write
 from src.visualization import visualize_numerical_data,visualize_categorical_data
 from src.button import download_button
 from src.forms import FormFlow
@@ -28,12 +29,15 @@ nav_pages = st.sidebar.radio('Page Selector',('Project Explanation','Exploratory
 
 if nav_pages == 'Project Explanation' :
     st.image('assets/insurance_scott_graham.jpg')
-    
-    def get_file_content_as_string():
-        url = 'https://raw.githubusercontent.com/fakhrirobi/travel_insurance_webapp/main/README.md' 
+    html_embed = '[Photo by Scott Graham on Unsplash](https://unsplash.com/@homajob?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)'
+    st.markdown(html_embed,unsafe_allow_html=True)
+  
+    url = 'https://raw.githubusercontent.com/fakhrirobi/travel_insurance_webapp/main/README.md'
+    def get_file_content_as_string(url):
+        #for reading readme.md from github
         response = urllib.request.urlopen(url)
         return response.read().decode("utf-8")
-    st.markdown(get_file_content_as_string(),unsafe_allow_html=True)
+    st.markdown(get_file_content_as_string(url),unsafe_allow_html=True)
     
 elif nav_pages == 'Exploratory Data Analysis' :
     st.title('Exploratory Data Analysis')
@@ -71,9 +75,7 @@ elif nav_pages == 'Exploratory Data Analysis' :
         visualize_numerical_data(data)
             
 elif nav_pages == 'Create your own model' : 
-    model_comparison = st.expander('Model Comparison')
-    show_model_button = model_comparison.button('Show Model Comparison')
-
+    st.subheader("Custom Params for creating XGBoost Model in Travel Insurance dataset")
     with st.form("model_customization") : 
         st.write('please input this following value to customize model')
         xgb_param  = {
@@ -123,7 +125,7 @@ elif nav_pages == 'Try Prediction' :
         employment_form = st.selectbox('Employment Type',options=('Government Sector', 'Private Sector/Self Employed'))
         graduate_form = st.selectbox('are your customer a  graduate ? ',options=('Yes','No'))
         annual_income_form = st.number_input('Please input customer annual income',min_value=1)
-        family_numbers_form = st.number_input('How many family members they have ?',min_value=0)
+        family_numbers_form = st.number_input('How many family members they have ?',min_value=1)
         chronicdiseases_form = st.selectbox('have chronic disease ? ',options=('Yes','No'))
         frequentFlyer_form = st.selectbox('Do they  frequently go travelling ? ',options=('Yes','No'))
         evertravelledAbroad_form = st.selectbox('did they use to go abroad ? ',options=('Yes','No'))
@@ -131,8 +133,9 @@ elif nav_pages == 'Try Prediction' :
     if submit_btn : 
         st.write('Thank you for your input the models are about to tell you')
         response_data={'Age':age_form, 'AnnualIncome':annual_income_form, 
-                    'FamilyMembers':family_numbers_form, 'ChronicDiseases':chronicdiseases_form, 
+                    'FamilyMembers':family_numbers_form, 'ChronicDiseases':chronicdiseases_form,
                     'FrequentFlyer':frequentFlyer_form, 'EverTravelledAbroad':evertravelledAbroad_form,
+                    'mean_income_per_member' : annual_income_form/(family_numbers_form+1),
                     'Employment Type_Government Sector':employment_form,
                     'Employment Type_Private Sector/Self Employed':employment_form, 
                     'GraduateOrNot_No':graduate_form,'GraduateOrNot_Yes':graduate_form}
@@ -142,13 +145,11 @@ elif nav_pages == 'Try Prediction' :
         # start to preprocess 
         form_process = FormFlow(response_data, label_encoder)
         model_input = form_process.preprocess_input()
-        #
-    
+        
         #loading the trained_model 
         # path = os.path.join(current_dir,')
         filename = r'src/xgb_model_without_tuning.pkl'
-        with open(filename,'rb') as file :
-            clf_model = pickle.load(file)
+        clf_model = joblib.load(filename)
             
         pred = clf_model.predict(model_input)
         proba=clf_model.predict_proba(model_input)
@@ -156,14 +157,14 @@ elif nav_pages == 'Try Prediction' :
         proba_result = proba_result.apply(lambda x : round(100*x,2))
         if pred == 1 :
             st.title('Prediction Result : ')
-            st.write('Your Customer is going to buy Travel Insurance')
+            st.success('Your Customer is going to buy Travel Insurance')
         else  : 
             st.title('Prediction Result :') 
-            st.write('Your Customer is  not going to buy Travel Insurance') 
+            st.warning('Your Customer is  not going to buy Travel Insurance') 
 
     
         #charting 
-        fig = px.bar(x=proba_result.columns,y=proba_result.iloc[0])
+        fig = px.bar(x=proba_result.columns,y=proba_result.iloc[0],color=proba_result.columns)
         st.plotly_chart(fig)
         
         

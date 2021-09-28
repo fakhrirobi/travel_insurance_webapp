@@ -6,7 +6,7 @@ from plotly.subplots import make_subplots
 import numpy as np 
 
 def start_training(model) : 
-    data = pd.read_csv('../data/preprocessed_data.csv').reset_index(drop=True)
+    data = pd.read_csv('src/data/preprocessed_data.csv').reset_index(drop=True)
     target = 'TravelInsurance'
     X = data.drop(target,axis=1).values
     y = data[target].values.ravel()
