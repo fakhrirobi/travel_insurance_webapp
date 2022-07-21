@@ -26,12 +26,13 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 data = pd.read_csv('src/data/travel.csv')
 # tabs = st.sidebar.radio('Page Selector',('Project Explanation','Exploratory Data Analysis','Create your own model','Try Prediction'))
-with st.sidebar:
-    tabs = on_hover_tabs(tabName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], 
-                         iconName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], default_choice=0
-)
+# with st.sidebar:
+#     tabs = on_hover_tabs(tabName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], 
+#                          iconName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], default_choice=0
+# )
+tab1, tab2, tab3,tab4 = st.tabs(['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'])
 
-if tabs == 'Project Explanation' :
+with tab1 :
     st.image('assets/insurance_scott_graham.jpg')
     html_embed = '[Photo by Scott Graham on Unsplash](https://unsplash.com/@homajob?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)'
     st.markdown(html_embed,unsafe_allow_html=True)
@@ -43,7 +44,7 @@ if tabs == 'Project Explanation' :
         return response.read().decode("utf-8")
     st.markdown(get_file_content_as_string(url),unsafe_allow_html=True)
     
-elif tabs == 'Exploratory Data Analysis' :
+with tab2 :
     st.title('Exploratory Data Analysis')
     dataset_desc_exp = st.expander('Dataset Description',expanded=True)
     dataset_desc_exp.markdown('''
@@ -78,7 +79,7 @@ elif tabs == 'Exploratory Data Analysis' :
         
         visualize_numerical_data(data)
             
-elif tabs == 'Create your own model' : 
+with tab3 : 
     st.subheader("Custom Params for creating XGBoost Model in Travel Insurance dataset")
     with st.form("model_customization") : 
         st.write('please input this following value to customize model')
@@ -121,7 +122,7 @@ elif tabs == 'Create your own model' :
 
 
         
-elif tabs == 'Try Prediction' : 
+with tab4 : 
     st.title("Let's Try to Predict whether your customer want to buy Travel Insurance")
     with st.form('my form') : 
         st.write('To predict whether your customer is willing to buy our insurance product please input your customer candidate data below')
