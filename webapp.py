@@ -3,6 +3,7 @@ from src.visualization import visualize_numerical_data,visualize_categorical_dat
 from src.button import download_button
 from src.forms import FormFlow
 from src.custom_model import start_training,generate_chart
+from st_on_hover_tabs import on_hover_tabs # using on hover tabs custom components streamlit 
 import streamlit as st
 import plotly.express as px  
 import pandas as pd 
@@ -24,10 +25,27 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
 data = pd.read_csv('src/data/travel.csv')
-nav_pages = st.sidebar.radio('Page Selector',('Project Explanation','Exploratory Data Analysis','Create your own model','Try Prediction'))
+# tabs = st.sidebar.radio('Page Selector',('Project Explanation','Exploratory Data Analysis','Create your own model','Try Prediction'))
+with st.sidebar:
+    tabs = on_hover_tabs(tabName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], 
+                         iconName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], default_choice=0,
+                         styles = {'navtab': {'background-color':'#111',
+                                                  'color': '#818181',
+                                                  'font-size': '18px',
+                                                  'transition': '.3s',
+                                                  'white-space': 'nowrap',
+                                                  'text-transform': 'uppercase'},
+                                       'tabOptionsStyle': {':hover :hover': {'color': 'red',
+                                                                      'cursor': 'pointer'}},
+                                       'iconStyle':{'position':'fixed',
+                                                    'left':'7.5px',
+                                                    'text-align': 'left'},
+                                       'tabStyle' : {'list-style-type': 'none',
+                                                     'margin-bottom': '30px',
+                                                     'padding-left': '30px'}},
+                             key="1")
 
-
-if nav_pages == 'Project Explanation' :
+if tabs == 'Project Explanation' :
     st.image('assets/insurance_scott_graham.jpg')
     html_embed = '[Photo by Scott Graham on Unsplash](https://unsplash.com/@homajob?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)'
     st.markdown(html_embed,unsafe_allow_html=True)
@@ -39,7 +57,7 @@ if nav_pages == 'Project Explanation' :
         return response.read().decode("utf-8")
     st.markdown(get_file_content_as_string(url),unsafe_allow_html=True)
     
-elif nav_pages == 'Exploratory Data Analysis' :
+elif tabs == 'Exploratory Data Analysis' :
     st.title('Exploratory Data Analysis')
     dataset_desc_exp = st.expander('Dataset Description',expanded=True)
     dataset_desc_exp.markdown('''
@@ -74,7 +92,7 @@ elif nav_pages == 'Exploratory Data Analysis' :
         
         visualize_numerical_data(data)
             
-elif nav_pages == 'Create your own model' : 
+elif tabs == 'Create your own model' : 
     st.subheader("Custom Params for creating XGBoost Model in Travel Insurance dataset")
     with st.form("model_customization") : 
         st.write('please input this following value to customize model')
@@ -117,7 +135,7 @@ elif nav_pages == 'Create your own model' :
 
 
         
-elif nav_pages == 'Try Prediction' : 
+elif tabs == 'Try Prediction' : 
     st.title("Let's Try to Predict whether your customer want to buy Travel Insurance")
     with st.form('my form') : 
         st.write('To predict whether your customer is willing to buy our insurance product please input your customer candidate data below')
