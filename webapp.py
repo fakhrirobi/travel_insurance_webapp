@@ -176,6 +176,3 @@ with tab4 :
         
      
 
-else : 
-    st.write('No Choice Bro')
-
