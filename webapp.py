@@ -28,7 +28,8 @@ data = pd.read_csv('src/data/travel.csv')
 # tabs = st.sidebar.radio('Page Selector',('Project Explanation','Exploratory Data Analysis','Create your own model','Try Prediction'))
 with st.sidebar:
     tabs = on_hover_tabs(tabName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], 
-                        default_choice=0)
+                         iconName=['Project Explanation', 'Exploratory Data Analysis', 'Create your own model','Try Prediction'], default_choice=0
+)
 
 if tabs == 'Project Explanation' :
     st.image('assets/insurance_scott_graham.jpg')
